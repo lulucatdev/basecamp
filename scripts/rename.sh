@@ -53,7 +53,22 @@ find . -type f \
     fi
   done
 
-# 2. Rename directories (deepest first to avoid path conflicts)
+# 2. Rename files containing old name
+echo ""
+echo "Renaming files..."
+find . -type f -name "*${OLD_SNAKE}*" \
+  -not -path './.git/*' \
+  -not -path './_build/*' \
+  -not -path './deps/*' \
+  -not -path './.elixir_ls/*' \
+  -not -path './assets/node_modules/*' \
+  | while read -r file; do
+    new_file="$(dirname "$file")/$(basename "$file" | sed "s/${OLD_SNAKE}/${NEW_NAME}/g")"
+    mv "$file" "$new_file"
+    echo "  $file -> $new_file"
+  done
+
+# 3. Rename directories (deepest first to avoid path conflicts)
 echo ""
 echo "Renaming directories..."
 find . -depth -type d -name "*${OLD_SNAKE}*" \
@@ -68,7 +83,7 @@ find . -depth -type d -name "*${OLD_SNAKE}*" \
     echo "  $dir -> $new_dir"
   done
 
-# 3. Clean build artifacts
+# 4. Clean build artifacts
 echo ""
 echo "Cleaning build artifacts..."
 rm -rf _build .elixir_ls

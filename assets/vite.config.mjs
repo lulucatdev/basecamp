@@ -8,8 +8,13 @@ export default defineConfig(({ command }) => {
   const isDev = command !== "build";
 
   return {
+    publicDir: false,
     plugins: [
-      vue(),
+      vue({
+        template: {
+          transformAssetUrls: false,
+        },
+      }),
       liveVuePlugin(),
       tailwindcss(),
       phoenixVitePlugin(),
@@ -36,7 +41,7 @@ export default defineConfig(({ command }) => {
     },
     build: {
       outDir: "../priv/static",
-      emptyOutDir: true,
+      emptyOutDir: false,
       manifest: false,
       ssrManifest: false,
       rollupOptions: {
