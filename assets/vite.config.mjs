@@ -18,6 +18,7 @@ export default defineConfig(({ command }) => {
       alias: {
         "@": __dirname,
       },
+      dedupe: ["vue"],
     },
     optimizeDeps: {
       include: ["live_vue", "phoenix", "phoenix_html", "phoenix_live_view"],
