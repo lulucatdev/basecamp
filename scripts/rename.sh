@@ -2,7 +2,9 @@
 set -euo pipefail
 
 # Rename this project from "basecamp" to a new name.
-# Usage: ./rename.sh my_app
+# Usage: ./scripts/rename.sh my_app
+
+cd "$(dirname "$0")/.."
 
 if [ $# -ne 1 ]; then
   echo "Usage: ./rename.sh <new_name>"
